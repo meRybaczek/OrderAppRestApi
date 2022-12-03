@@ -20,7 +20,10 @@ public class OrderService {
         return orderRepo.save(order);
     }
     public void deleteById(Integer id) {
-        orderRepo.deleteById(id);
+        if(orderRepo.findById(id).isEmpty())
+            throw new OrderNotFoundException(id);
+        else
+            orderRepo.deleteById(id);
     }
 
     public List<OrderPdf> getAllOrders(String clientName,
@@ -41,11 +44,14 @@ public class OrderService {
 
     public OrderPdf findById(Integer id) {
         return orderRepo.findById(id)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(()-> new OrderNotFoundException(id));
     }
 @Transactional
     public void updateDiscountById (Double discount,Integer id){
-        orderRepo.updateDiscount(discount, id);
+        if (orderRepo.findById(id).isEmpty())
+            throw new OrderNotFoundException(id);
+        else
+            orderRepo.updateDiscount(discount, id);
     }
 
 }

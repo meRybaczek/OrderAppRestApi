@@ -16,8 +16,8 @@ public interface OrderFileRepository extends JpaRepository<OrderFile, Integer> {
     @Query("SELECT o FROM OrderFile o WHERE o.order_id = :id")
     List<OrderFile> getOrderFilesByOrderId(@Param("id") Integer id);
 
-    @Modifying
-    @Query("DELETE OrderFile o WHERE o.id = :id AND o.order_id = :order_id")
-    void deleteById(@Param("id") Integer id, @Param("order_id") Integer order_id);
+//    @Modifying
+//    @Query("DELETE OrderFile o WHERE o.id = :id AND o.order_id = :order_id")
+//    void deleteById(@Param("id") Integer id, @Param("order_id") Integer order_id);
 
 }

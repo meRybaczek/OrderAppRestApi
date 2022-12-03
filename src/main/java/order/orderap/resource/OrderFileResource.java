@@ -1,9 +1,7 @@
 package order.orderap.resource;
 
 import order.orderap.model.OrderFile;
-import order.orderap.model.OrderPdf;
 import order.orderap.service.OrderFileService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +22,19 @@ public class OrderFileResource {
     public List<OrderFile> get(@RequestBody OrderFile orderFile, @PathVariable Integer order_id){
         return orderFileService.getByOrderId(order_id);
     }
-
-    @DeleteMapping("/order/{order_id}/orderFile")
-    public void deleteById(@RequestParam Integer id, @PathVariable Integer order_id){
-        orderFileService.deleteById(id, order_id);
-
-
+    @GetMapping("/orderFile/{id}")
+    public OrderFile get(@PathVariable Integer id){
+        return orderFileService.findById(id);
     }
+
+//    @DeleteMapping("/order/{order_id}/orderFile")
+//    public void deleteByOrderId(@RequestParam Integer id, @PathVariable Integer order_id){
+//        orderFileService.deleteById(id, order_id);
+//    }
+
+    @DeleteMapping("/orderFile")
+    public void deleteById(@RequestParam Integer id){
+        orderFileService.deleteById(id);
+    }
+
 }

@@ -32,14 +32,11 @@ public class OrderResource {
         return orderService.getAllOrders(clientName,clientPhone,createdAt,clientDiscount);
 
         }
-
-
     @GetMapping("/order/{id}")
     public OrderPdf findById(@PathVariable Integer id) {
         return orderService.findById(id);
 
     }
-
         @PatchMapping("/order")
         public void updateDiscountById (@RequestParam Double discount, @RequestParam Integer id){
             orderService.updateDiscountById(discount, id);
