@@ -22,7 +22,7 @@ public class OrderFileResource {
 
     @GetMapping("/order/{order_id}/orderFile")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<OrderFile> get(@RequestBody OrderFile orderFile, @PathVariable Integer order_id){
+    public List<OrderFile> getByOrderId(@PathVariable Integer order_id){
         return orderFileService.getByOrderId(order_id);
     }
     @GetMapping("/orderFile/{id}")

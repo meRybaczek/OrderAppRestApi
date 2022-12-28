@@ -10,23 +10,24 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/order")
 public class OrderResource {
 
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/order")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OrderPdf add(@RequestBody OrderPdf order) {
         return orderService.addOrder(order);
     }
 
-    @DeleteMapping("/order")
+    @DeleteMapping
     public void delete(@RequestParam Integer id) {
         orderService.deleteById(id);
     }
 
-    @GetMapping("/order")
+    @GetMapping
     @ResponseStatus(HttpStatus.FOUND)
     public List<OrderPdf> getAllOrders(@RequestParam(required = false) String clientName,
                                        @RequestParam(required = false) String clientPhone,
@@ -35,13 +36,13 @@ public class OrderResource {
         return orderService.getAllOrders(clientName,clientPhone,createdAt,clientDiscount);
 
         }
-    @GetMapping("/order/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public OrderPdf findById(@PathVariable Integer id) {
         return orderService.findById(id);
 
     }
-        @PatchMapping("/order")
+        @PatchMapping
         public void updateDiscountById (@RequestParam Double discount, @RequestParam Integer id){
             orderService.updateDiscountById(discount, id);
         }

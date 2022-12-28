@@ -1,5 +1,6 @@
 package order.orderap.repository;
 
+import order.orderap.model.OrderFile;
 import order.orderap.model.OrderPdf;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -21,6 +22,7 @@ public interface OrderRepository extends JpaRepository<OrderPdf, Integer> {
     @Modifying
     @Query("UPDATE OrderPdf o SET o.discount = :discount WHERE o.id = :id")
     void updateDiscount(@Param("discount") double discount, @Param("id") Integer id);
+
 
 
 

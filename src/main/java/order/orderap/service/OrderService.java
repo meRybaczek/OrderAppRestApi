@@ -1,6 +1,8 @@
 package order.orderap.service;
 
+import order.orderap.model.OrderFile;
 import order.orderap.model.OrderPdf;
+import order.orderap.repository.OrderFileRepository;
 import order.orderap.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class OrderService {
 
 
     public OrderPdf addOrder(OrderPdf order) {
+        for (OrderFile orderFile : order.getOrderFiles()) {
+            orderFile.setOrderPdf(order);
+        }
         return orderRepo.save(order);
     }
     public void deleteById(Integer id) {
