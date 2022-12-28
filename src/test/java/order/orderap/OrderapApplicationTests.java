@@ -42,10 +42,10 @@ class OrderapApplicationTests {
 	void findByIdTest() {
 		//when
 		OrderPdf byIdPdf = orderService.findById(1);
-		OrderFile byIdFile = orderFileService.findById(2);
+		OrderFile byIdFile = orderFileService.findById(1);
 		//then
 		Assertions.assertEquals(1, byIdPdf.getId());
-		Assertions.assertEquals(2, byIdFile.getId());
+		Assertions.assertEquals(1, byIdFile.getId());
 	}
 
 	@Test
