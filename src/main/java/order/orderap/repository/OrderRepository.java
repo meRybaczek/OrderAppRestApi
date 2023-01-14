@@ -19,12 +19,7 @@ public interface OrderRepository extends JpaRepository<OrderPdf, Integer> {
     List<OrderPdf> findByDiscount(@Param("discount") Double discount);
     List<OrderPdf> findByCreatedAt(@Param("createdAt") LocalDate createdAt);
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("UPDATE OrderPdf o SET o.discount = :discount WHERE o.id = :id")
     void updateDiscount(@Param("discount") double discount, @Param("id") Integer id);
-
-
-
-
-
 }

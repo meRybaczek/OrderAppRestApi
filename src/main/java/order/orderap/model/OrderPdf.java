@@ -1,12 +1,12 @@
 package order.orderap.model;
 
 import lombok.*;
-import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,8 +26,8 @@ public class OrderPdf {
             (cascade = {CascadeType.PERSIST,
                     CascadeType.REMOVE,},
                     fetch = FetchType.EAGER//
-            , mappedBy = "orderPdf"
-    )
+                    , mappedBy = "orderPdf"
+            )
     List<OrderFile> orderFiles = new ArrayList<>();
 
 //    @OneToOne
@@ -41,7 +41,7 @@ public class OrderPdf {
         this.createdAt = createdAt;
     }
 
-    public void addOrderFile(OrderFile orderFile){
+    public void addOrderFile(OrderFile orderFile) {
         getOrderFiles().add(orderFile);
     }
 

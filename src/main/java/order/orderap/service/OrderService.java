@@ -2,7 +2,6 @@ package order.orderap.service;
 
 import order.orderap.model.OrderFile;
 import order.orderap.model.OrderPdf;
-import order.orderap.repository.OrderFileRepository;
 import order.orderap.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,11 +51,11 @@ public class OrderService {
                 .orElseThrow(()-> new OrderNotFoundException(id));
     }
 @Transactional
-    public void updateDiscountById (Double discount,Integer id){
+    public OrderPdf updateDiscountById (Double discount, Integer id){
         if (orderRepo.findById(id).isEmpty())
             throw new OrderNotFoundException(id);
-        else
-            orderRepo.updateDiscount(discount, id);
-    }
 
+        orderRepo.updateDiscount(discount, id);
+        return findById(id);
+    }
 }

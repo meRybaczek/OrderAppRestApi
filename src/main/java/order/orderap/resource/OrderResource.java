@@ -15,7 +15,6 @@ public class OrderResource {
 
     @Autowired
     private OrderService orderService;
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OrderPdf add(@RequestBody OrderPdf order) {
@@ -23,6 +22,7 @@ public class OrderResource {
     }
 
     @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestParam Integer id) {
         orderService.deleteById(id);
     }
@@ -42,8 +42,9 @@ public class OrderResource {
         return orderService.findById(id);
 
     }
-        @PatchMapping
-        public void updateDiscountById (@RequestParam Double discount, @RequestParam Integer id){
-            orderService.updateDiscountById(discount, id);
-        }
+    @PatchMapping
+    @ResponseStatus(HttpStatus.OK)
+    public OrderPdf updateDiscountById (@RequestParam Double discount, @RequestParam Integer id){
+        return orderService.updateDiscountById(discount, id);
+    }
 }

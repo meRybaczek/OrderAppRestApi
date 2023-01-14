@@ -5,6 +5,7 @@ import order.orderap.model.OrderPdf;
 import order.orderap.repository.OrderFileRepository;
 import order.orderap.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -15,7 +16,7 @@ public class OrderFileService {
     OrderFileRepository orderFileRepo;
     @Autowired
     OrderRepository orderRepo;
-
+    @Modifying
     public OrderFile addOrderFile(OrderFile orderFile, Integer order_id) {
         if(orderRepo.findById(order_id).isEmpty())
             throw new OrderNotFoundException(order_id);
@@ -36,10 +37,6 @@ public class OrderFileService {
             throw new OrderNotFoundException(id);
 
         return orderRepo.findById(id).get().getOrderFiles();
-    }
-
-    public List<OrderFile> findByFileName(String name){
-        return orderFileRepo.findByFileName(name);
     }
 
     @Transactional

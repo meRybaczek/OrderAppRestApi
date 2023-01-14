@@ -1,6 +1,5 @@
 package order.orderap;
 
-import order.orderap.model.OrderFile;
 import order.orderap.model.OrderPdf;
 import order.orderap.repository.OrderRepository;
 import order.orderap.service.OrderFileService;
@@ -39,23 +38,15 @@ class OrderapApplicationTests {
 //    }
 
 	@Test
-	void findByIdTest() {
+	void findByIdTest() {				//zrobic osobne klasy testowe dla servicow
 		//when
 		OrderPdf byIdPdf = orderService.findById(1);
-		OrderFile byIdFile = orderFileService.findById(1);
 		//then
 		Assertions.assertEquals(1, byIdPdf.getId());
-		Assertions.assertEquals(1, byIdFile.getId());
-	}
-
-	@Test
-	void isOrderFileAddedToOrderTest(){
-		//when
-		OrderPdf byId = orderService.findById(1);
-		String clientName = byId.getClientName();
-		//then
-		Assertions.assertEquals("Arch1", clientName);
-		Assertions.assertEquals(1,byId.getOrderFiles().size());
+		Assertions.assertEquals(1,byIdPdf.getOrderFiles().size());
+		Assertions.assertEquals("Arch1", byIdPdf.getClientName());
+		Assertions.assertEquals("Rys1", byIdPdf.getOrderFiles().get(0).getFileName());
+		//reszte kilka asercji
 	}
 
 	@Test
@@ -65,13 +56,9 @@ class OrderapApplicationTests {
 		//then
 		Assertions.assertThrows(OrderNotFoundException.class, () -> orderService.findById(1));
 	}
-	@Test
-	void isOrderFileBelongsToOrder(){
-		//when
-		Integer rys1 = orderFileService.findByFileName("Rys1").get(0).getOrderPdf().getId();
-		//then
-		Assertions.assertEquals(1, rys1);
 
-	}
+	// test metody add
+	// test update
+
 
 }

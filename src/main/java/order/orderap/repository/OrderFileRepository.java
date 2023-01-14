@@ -9,11 +9,5 @@ import java.util.List;
 
 @Repository
 public interface OrderFileRepository extends JpaRepository<OrderFile, Integer> {
-
-
     List<OrderFile> findByFileName(@Param("clientName") String fileName);
-//    @Modifying
-//    //@Query("SELECT o.orderFiles FROM OrderPdf o WHERE o.order_id = :id")
-//    List<OrderFile> getOrderFilesByOrderPdfId(@Param("id") Integer id);
-
 }

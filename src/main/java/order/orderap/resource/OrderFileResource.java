@@ -31,11 +31,6 @@ public class OrderFileResource {
         return orderFileService.findById(id);
     }
 
-//    @DeleteMapping("/order/{order_id}/orderFile")
-//    public void deleteByOrderId(@RequestParam Integer id, @PathVariable Integer order_id){
-//        orderFileService.deleteById(id, order_id);
-//    }
-
     @DeleteMapping("/orderFile")
     public void deleteById(@RequestParam Integer id){
         orderFileService.deleteById(id);
