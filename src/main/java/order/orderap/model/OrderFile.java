@@ -13,7 +13,8 @@ import javax.persistence.*;
 
 public class OrderFile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq")
+    @SequenceGenerator(name="seq",sequenceName="order_file_seq")
     private Integer id;
     private String fileName;
     private String fileDir;
