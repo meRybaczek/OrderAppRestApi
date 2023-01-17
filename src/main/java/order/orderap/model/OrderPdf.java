@@ -23,6 +23,11 @@ public class OrderPdf {
     private String clientPhone;
     private double discount;
     private LocalDate createdAt;
+
+    @ManyToOne
+    private Client client;
+
+
     @OneToMany
             (cascade = {CascadeType.PERSIST,
                     CascadeType.REMOVE,},
@@ -46,10 +51,6 @@ public class OrderPdf {
         this.clientPhone = clientPhone;
         this.discount = discount;
         this.createdAt = createdAt;
-    }
-
-    public void addOrderFile(OrderFile orderFile) {
-        getOrderFiles().add(orderFile);
     }
 
 }
