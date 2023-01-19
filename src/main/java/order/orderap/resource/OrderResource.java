@@ -10,41 +10,41 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/order")
 public class OrderResource {
 
     @Autowired
-    private OrderService orderService;
-    @PostMapping
+    OrderService orderService;
+    @PostMapping("client/{clientId}/order")
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderPdf add(@RequestBody OrderPdf order) {
-        return orderService.addOrder(order);
+    public OrderPdf add(@RequestBody OrderPdf order, @PathVariable Integer clientId) {
+        return orderService.addOrder(order, clientId);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/order")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestParam Integer id) {
         orderService.deleteById(id);
     }
 
-    @GetMapping
+    @GetMapping("/order")
     @ResponseStatus(HttpStatus.FOUND)
     public List<OrderPdf> getAllOrders(@RequestParam(required = false) String clientName,
-                                       @RequestParam(required = false) String clientPhone,
-                                       @RequestParam(required = false) LocalDate createdAt,
-                                       @RequestParam(required = false) Double clientDiscount) {
-        return orderService.getAllOrders(clientName,clientPhone,createdAt,clientDiscount);
+                                       @RequestParam(required = false) LocalDate createdAt) {
+        return orderService.getAllOrdersBy(clientName,createdAt);
 
         }
-    @GetMapping("/{id}")
+    @GetMapping("order/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public OrderPdf findById(@PathVariable Integer id) {
         return orderService.findById(id);
+    }
 
+    @GetMapping("client/{clientId}/order")
+    @ResponseStatus(HttpStatus.FOUND)
+    public List<OrderPdf> getAllByClientId(Integer clientId) {
+        return orderService.getByClientId(clientId);
     }
-    @PatchMapping
-    @ResponseStatus(HttpStatus.OK)
-    public OrderPdf updateDiscountById (@RequestParam Double discount, @RequestParam Integer id){
-        return orderService.updateDiscountById(discount, id);
-    }
+
+
+
 }

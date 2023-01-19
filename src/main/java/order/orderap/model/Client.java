@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,10 +17,11 @@ import javax.persistence.*;
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq")
-    @SequenceGenerator(name="seq",sequenceName="order_pdf_seq")
+    @SequenceGenerator(name="seq",sequenceName="client_seq")
     private Integer id;
     private String clientName;
-    private String clientPhone;
+    private String nipNo;
+    private String clientEmail;
     private double discount;
     @OneToMany
             (cascade = {CascadeType.PERSIST,
@@ -26,7 +29,7 @@ public class Client {
                     fetch = FetchType.EAGER//
                     , mappedBy = "client"
             )
-    private OrderPdf orderPdf;
+    private List<OrderPdf> orderPdf = new ArrayList<>();
 
 
 

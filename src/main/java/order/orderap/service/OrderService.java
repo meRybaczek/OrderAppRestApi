@@ -1,12 +1,14 @@
 package order.orderap.service;
 
+import order.orderap.model.Client;
 import order.orderap.model.OrderFile;
 import order.orderap.model.OrderPdf;
+import order.orderap.repository.ClientRepository;
 import order.orderap.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,47 +17,50 @@ public class OrderService {
 
     @Autowired
     OrderRepository orderRepo;
+    @Autowired
+    ClientRepository clientRepo;
 
 
-    public OrderPdf addOrder(OrderPdf order) {
+    public OrderPdf addOrder(OrderPdf order, Integer clientId) {
+        Client client = clientRepo.findById(clientId)
+                .orElseThrow(() -> new ClientIdNotFoundException(clientId));
+
+        order.setClient(client);
+
         for (OrderFile orderFile : order.getOrderFiles()) {
             orderFile.setOrderPdf(order);
         }
+
         return orderRepo.save(order);
     }
+
     public void deleteById(Integer id) {
-        if(orderRepo.findById(id).isEmpty())
+        if (!orderRepo.existsById(id))
             throw new OrderNotFoundException(id);
-        else
-            orderRepo.deleteById(id);
+
+        orderRepo.deleteById(id);
     }
 
-    public List<OrderPdf> getAllOrders(String clientName,
-                                       String clientPhone,
-                                       LocalDate createdAt,
-                                       Double clientDiscount) {
+    public List<OrderPdf> getAllOrdersBy(String clientName, LocalDate createdAt) {
 
-        if (clientName != null)
-            return orderRepo.findByClientName(clientName);
-        else if (clientPhone != null)
-            return orderRepo.findByClientPhone(clientPhone);
-        else if (createdAt != null)
+        if (clientName != null) {
+            return clientRepo.findByClientName(clientName)
+                    .map(Client::getOrderPdf)
+                    .orElseThrow(() -> new ClientDataNotFoundException(clientName));
+        } else if (createdAt != null)
             return orderRepo.findByCreatedAt(createdAt);
-        else if (clientDiscount != null)
-            return orderRepo.findByDiscount(clientDiscount);
+
         return orderRepo.findAll();
+    }
+
+    public List<OrderPdf> getByClientId(Integer clientId) {
+        return clientRepo.findById(clientId)
+                .map(Client::getOrderPdf)
+                .orElseThrow(() -> new ClientIdNotFoundException(clientId));
     }
 
     public OrderPdf findById(Integer id) {
         return orderRepo.findById(id)
-                .orElseThrow(()-> new OrderNotFoundException(id));
-    }
-@Transactional
-    public OrderPdf updateDiscountById (Double discount, Integer id){
-        if (orderRepo.findById(id).isEmpty())
-            throw new OrderNotFoundException(id);
-
-        orderRepo.updateDiscount(discount, id);
-        return findById(id);
+                .orElseThrow(() -> new OrderNotFoundException(id));
     }
 }
