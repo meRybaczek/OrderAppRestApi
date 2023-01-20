@@ -45,8 +45,9 @@ public class OrderService {
 
         if (clientName != null) {
             return clientRepo.findByClientName(clientName)
-                    .map(Client::getOrderPdf)
-                    .orElseThrow(() -> new ClientDataNotFoundException(clientName));
+                    .orElseThrow(() -> new ClientDataNotFoundException(clientName))
+                    .getOrderPdf();
+
         } else if (createdAt != null)
             return orderRepo.findByCreatedAt(createdAt);
 
@@ -55,8 +56,8 @@ public class OrderService {
 
     public List<OrderPdf> getByClientId(Integer clientId) {
         return clientRepo.findById(clientId)
-                .map(Client::getOrderPdf)
-                .orElseThrow(() -> new ClientIdNotFoundException(clientId));
+                .orElseThrow(() -> new ClientIdNotFoundException(clientId))
+                .getOrderPdf();
     }
 
     public OrderPdf findById(Integer id) {

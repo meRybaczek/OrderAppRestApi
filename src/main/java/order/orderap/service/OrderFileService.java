@@ -35,8 +35,9 @@ public class OrderFileService {
 
     public List<OrderFile> getByOrderId(Integer orderId) {
         return orderRepo.findById(orderId)
-                .map(OrderPdf::getOrderFiles)
-                .orElseThrow(()-> new OrderNotFoundException(orderId));
+                .orElseThrow(()-> new OrderNotFoundException(orderId))
+                .getOrderFiles();
+
 
 //                                                                      //moze byc ??? która metody optymalniejsza
 //        Optional<OrderPdf> byId = orderRepo.findById(orderId);

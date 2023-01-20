@@ -18,9 +18,8 @@ public class ClientService {
         return clientRepo.save(client);
     }
     public void deleteById(Integer id) {
-        if (clientRepo.findById(id).isEmpty())
-            throw new ClientIdNotFoundException(id);
-
+        if (!clientRepo.existsById(id))
+            throw new OrderNotFoundException(id);
         clientRepo.deleteById(id);
     }
     public Client findById(Integer id) {
