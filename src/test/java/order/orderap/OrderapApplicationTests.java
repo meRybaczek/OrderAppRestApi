@@ -1,14 +1,6 @@
 package order.orderap;
 
-import order.orderap.model.OrderPdf;
-import order.orderap.repository.OrderRepository;
-import order.orderap.service.OrderFileService;
-import order.orderap.service.OrderNotFoundException;
-import order.orderap.service.OrderService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;

@@ -1,5 +1,6 @@
 package order.orderap.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,21 +17,20 @@ import java.util.List;
 public class OrderPdf {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq")
-    @SequenceGenerator(name="seq",sequenceName="order_pdf_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @SequenceGenerator(name = "seq", sequenceName = "order_pdf_seq")
     private Integer id;
+
     private LocalDate createdAt;
+
+    @JsonIgnore
     @ManyToOne
     private Client client;
+
     @OneToMany
-            (cascade = {CascadeType.PERSIST,
-                    CascadeType.REMOVE,},
-                    fetch = FetchType.EAGER//
-                    , mappedBy = "orderPdf"
-            )
+            (cascade = {CascadeType.PERSIST, CascadeType.REMOVE,}
+                    , fetch = FetchType.EAGER, mappedBy = "orderPdf")
     List<OrderFile> orderFiles = new ArrayList<>();
-
-
 
 
 }

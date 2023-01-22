@@ -17,7 +17,7 @@ public class ClientResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Client add(@RequestBody Client client) {
-        return clientService.addClient(client);
+        return clientService.add(client);
     }
 
     @DeleteMapping
@@ -38,23 +38,36 @@ public class ClientResource {
         return clientService.findAllClients();
     }
 
-    @GetMapping("/")                // JAKI URI DAC ???
-    @ResponseStatus(HttpStatus.FOUND)
-    public Client findBy(@RequestParam(required = false) String clientName,
-                         @RequestParam(required = false) String clientEmail,
-                         @RequestParam(required = false) String nipNo) {
+//    @GetMapping("/")                // JAKI URI DAC ???
+//    @ResponseStatus(HttpStatus.FOUND)
+//    public Client findBy(@RequestParam(required = false) String clientName,
+//                         @RequestParam(required = false) String clientEmail,
+//                         @RequestParam(required = false) String nipNo) {
+//
+//        return clientService.findBy(clientName, clientEmail, nipNo);
+//    }
 
-        return clientService.findBy(clientName, clientEmail, nipNo);
+    @PutMapping                         // nie ma roznicy czy patch czy put ???
+    @ResponseStatus(HttpStatus.OK)
+    public Client updateData(@RequestBody Client client) {
+        return clientService.update(client);
+    }
+    @GetMapping("/byClientName")
+    @ResponseStatus(HttpStatus.FOUND)
+    public List<Client> findByClientName(@RequestParam(required = false) String clientName,
+                                         @RequestParam(required = false) String clientEmail,
+                                         @RequestParam(required = false) String nipNo,
+                                         @RequestParam(required = false) Double discount) {
+        return clientService.findByClientCriteria(clientName,clientEmail,nipNo,discount);
     }
 
-    @PatchMapping
-    @ResponseStatus(HttpStatus.OK)
-    public Client updateData(@RequestParam Integer id,
-                             @RequestParam(required = false) String clientName,
-                             @RequestParam(required = false) String clientEmail,
-                             @RequestParam(required = false) String nipNo,
-                             @RequestParam(required = false) Double discount) {
-        return clientService.updateDataById(id,clientName,clientEmail,nipNo,discount);
+    @GetMapping("/criteria")
+    @ResponseStatus(HttpStatus.FOUND)
+    public List<Client> findByCriteria(@RequestParam(required = false) String clientName,
+                                       @RequestParam(required = false) String clientEmail,
+                                       @RequestParam(required = false) Double discount) {
+
+        return clientService.findByCriteria(clientName,clientEmail,discount);
     }
 
 }

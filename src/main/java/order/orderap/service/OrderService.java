@@ -7,8 +7,8 @@ import order.orderap.repository.ClientRepository;
 import order.orderap.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -33,7 +33,6 @@ public class OrderService {
 
         return orderRepo.save(order);
     }
-
     public void deleteById(Integer id) {
         if (!orderRepo.existsById(id))
             throw new OrderNotFoundException(id);
@@ -46,7 +45,7 @@ public class OrderService {
         if (clientName != null) {
             return clientRepo.findByClientName(clientName)
                     .orElseThrow(() -> new ClientDataNotFoundException(clientName))
-                    .getOrderPdf();
+                    .getOrderPdfList();
 
         } else if (createdAt != null)
             return orderRepo.findByCreatedAt(createdAt);
@@ -57,7 +56,7 @@ public class OrderService {
     public List<OrderPdf> getByClientId(Integer clientId) {
         return clientRepo.findById(clientId)
                 .orElseThrow(() -> new ClientIdNotFoundException(clientId))
-                .getOrderPdf();
+                .getOrderPdfList();
     }
 
     public OrderPdf findById(Integer id) {
