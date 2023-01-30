@@ -1,10 +1,13 @@
 package order.orderap.resource;
 
 import order.orderap.model.Client;
+import order.orderap.model.ClientDto;
 import order.orderap.service.ClientService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -13,6 +16,8 @@ public class ClientResource {
 
     @Autowired
     ClientService clientService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -27,47 +32,39 @@ public class ClientResource {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
-    public Client findById(@PathVariable Integer id) {
-        return clientService.findById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public ClientDto findById(@PathVariable Integer id) {
+        return convertToDto(clientService.findById(id));
     }
 
     @GetMapping
-    @ResponseStatus(HttpStatus.FOUND)
-    public List<Client> findAll() {
-        return clientService.findAllClients();
+    @ResponseStatus(HttpStatus.OK)
+    public List<ClientDto> findAll() {
+        return clientService.findAllClients()
+                .stream().map(this::convertToDto)
+                .toList();
     }
 
-//    @GetMapping("/")                // JAKI URI DAC ???
-//    @ResponseStatus(HttpStatus.FOUND)
-//    public Client findBy(@RequestParam(required = false) String clientName,
-//                         @RequestParam(required = false) String clientEmail,
-//                         @RequestParam(required = false) String nipNo) {
-//
-//        return clientService.findBy(clientName, clientEmail, nipNo);
-//    }
-
-    @PutMapping                         // nie ma roznicy czy patch czy put ???
-    @ResponseStatus(HttpStatus.OK)
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Client updateData(@RequestBody Client client) {
         return clientService.update(client);
     }
-    @GetMapping("/byClientName")
-    @ResponseStatus(HttpStatus.FOUND)
-    public List<Client> findByClientName(@RequestParam(required = false) String clientName,
-                                         @RequestParam(required = false) String clientEmail,
-                                         @RequestParam(required = false) String nipNo,
-                                         @RequestParam(required = false) Double discount) {
-        return clientService.findByClientCriteria(clientName,clientEmail,nipNo,discount);
-    }
 
     @GetMapping("/criteria")
-    @ResponseStatus(HttpStatus.FOUND)
-    public List<Client> findByCriteria(@RequestParam(required = false) String clientName,
-                                       @RequestParam(required = false) String clientEmail,
-                                       @RequestParam(required = false) Double discount) {
+    @ResponseStatus(HttpStatus.OK)
+    public List<ClientDto> findByCriteria(@RequestParam(required = false) String clientName,
+                                          @RequestParam(required = false) String clientEmail,
+                                          @RequestParam(required = false) Double discount) {
 
-        return clientService.findByCriteria(clientName,clientEmail,discount);
+        return clientService.findByCriteria(clientName, clientEmail, discount)
+                .stream().map(this::convertToDto)
+                .toList();
     }
+
+    private ClientDto convertToDto(Client client) {
+        return modelMapper.map(client, ClientDto.class);
+    }
+
 
 }

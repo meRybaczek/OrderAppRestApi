@@ -1,4 +1,4 @@
-package order.orderap.service;
+package order.orderap.exception;
 
 import javax.persistence.EntityNotFoundException;
 

@@ -1,5 +1,8 @@
 package order.orderap.service;
 
+import order.orderap.exception.ClientDataNotFoundException;
+import order.orderap.exception.ClientIdNotFoundException;
+import order.orderap.exception.OrderNotFoundException;
 import order.orderap.model.Client;
 import order.orderap.model.OrderFile;
 import order.orderap.model.OrderPdf;
@@ -7,7 +10,6 @@ import order.orderap.repository.ClientRepository;
 import order.orderap.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +35,7 @@ public class OrderService {
 
         return orderRepo.save(order);
     }
+
     public void deleteById(Integer id) {
         if (!orderRepo.existsById(id))
             throw new OrderNotFoundException(id);

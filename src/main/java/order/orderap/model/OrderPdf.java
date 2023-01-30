@@ -1,7 +1,12 @@
 package order.orderap.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -29,8 +34,10 @@ public class OrderPdf {
 
     @OneToMany
             (cascade = {CascadeType.PERSIST, CascadeType.REMOVE,}
-                    , fetch = FetchType.EAGER, mappedBy = "orderPdf")
+                    , fetch = FetchType.LAZY, mappedBy = "orderPdf")
     List<OrderFile> orderFiles = new ArrayList<>();
 
-
+    public OrderPdf(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
 }

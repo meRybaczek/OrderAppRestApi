@@ -13,8 +13,8 @@ import javax.persistence.*;
 
 public class OrderFile {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq")
-    @SequenceGenerator(name="seq",sequenceName="order_file_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @SequenceGenerator(name = "seq", sequenceName = "order_file_seq")
     private Integer id;
     private String fileName;
     private String fileDir;
@@ -28,7 +28,20 @@ public class OrderFile {
     @ManyToOne
     private OrderPdf orderPdf;
 
-    public OrderFile(String fileName, String fileDir, double drawingSizeWidth, double drawingSizeHight, boolean isDrawingColor, int drawingCopyQty, boolean isFold) {
+    public OrderFile(String fileName, String fileDir, double drawingSizeWidth, double drawingSizeHight,
+                     boolean isDrawingColor, int drawingCopyQty, boolean isFold) {
+        this.fileName = fileName;
+        this.fileDir = fileDir;
+        this.drawingSizeWidth = drawingSizeWidth;
+        this.drawingSizeHight = drawingSizeHight;
+        this.isDrawingColor = isDrawingColor;
+        this.drawingCopyQty = drawingCopyQty;
+        this.isFold = isFold;
+    }
+
+    public OrderFile(Integer id, String fileName, String fileDir, double drawingSizeWidth, double drawingSizeHight,
+                     boolean isDrawingColor, int drawingCopyQty, boolean isFold) {
+        this.id = id;
         this.fileName = fileName;
         this.fileDir = fileDir;
         this.drawingSizeWidth = drawingSizeWidth;

@@ -1,4 +1,4 @@
-package order.orderap.service;
+package order.orderap.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class OrderNotFoundAdvice {
-
+public class ClientDataNotFoundAdvice {
     @ResponseBody
-    @ExceptionHandler(OrderNotFoundException.class)
+    @ExceptionHandler(ClientDataNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String orderNotFoundHandler(OrderNotFoundException ex) {
+    String clientDataNotFoundHandler(ClientDataNotFoundException ex) {
         return ex.getMessage();
     }
 }

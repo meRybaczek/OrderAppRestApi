@@ -1,4 +1,4 @@
-package order.orderap.service;
+package order.orderap.exception;
 
 public class OrderFileNotFoundException extends RuntimeException{
     public OrderFileNotFoundException(Integer id) {

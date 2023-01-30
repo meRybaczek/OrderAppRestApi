@@ -1,5 +1,7 @@
 package order.orderap.service;
 
+import order.orderap.exception.OrderFileNotFoundException;
+import order.orderap.exception.OrderNotFoundException;
 import order.orderap.model.OrderFile;
 import order.orderap.model.OrderPdf;
 import order.orderap.repository.OrderFileRepository;
@@ -18,13 +20,28 @@ public class OrderFileService {
     OrderRepository orderRepo;
 
     @Transactional
-    public OrderFile addOrderFile(OrderFile orderFile, Integer order_id) {
+    public OrderFile add(OrderFile orderFile, Integer order_id) {
         OrderPdf orderPdf = orderRepo.findById(order_id)
                 .orElseThrow(() -> new OrderNotFoundException(order_id));
 
         orderFile.setOrderPdf(orderPdf);
         return orderFileRepo.save(orderFile);
     }
+
+    public OrderFile update(OrderFile orderFile) {
+        Integer orderFileId = orderFile.getId();
+
+        Integer order_id = orderFileRepo.findById(orderFileId)
+                .orElseThrow(() -> new OrderFileNotFoundException(orderFileId))
+                .getOrderPdf().getId();
+
+        OrderPdf orderPdf = orderRepo.findById(order_id)
+                .orElseThrow(() -> new OrderNotFoundException(order_id));
+
+        orderFile.setOrderPdf(orderPdf);
+        return orderFileRepo.save(orderFile);
+    }
+
 
     public OrderFile findById(Integer id) {
         return orderFileRepo.findById(id)
@@ -33,16 +50,8 @@ public class OrderFileService {
 
     public List<OrderFile> getByOrderId(Integer orderId) {
         return orderRepo.findById(orderId)
-                .orElseThrow(()-> new OrderNotFoundException(orderId))
+                .orElseThrow(() -> new OrderNotFoundException(orderId))
                 .getOrderFiles();
-
-
-//                                                                      //moze byc ??? która metody optymalniejsza
-//        Optional<OrderPdf> byId = orderRepo.findById(orderId);
-//        if (byId.isEmpty())
-//            throw new OrderNotFoundException(orderId);
-//
-//        return orderFileRepo.findByOrderPdf(byId.get());
     }
 
     @Transactional
