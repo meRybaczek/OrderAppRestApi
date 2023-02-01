@@ -11,6 +11,5 @@ import java.util.List;
 
 @Repository
 public interface OrderFileRepository extends JpaRepository<OrderFile, Integer> {
-    List<OrderFile> findByOrderPdf(OrderPdf orderPdf);
 
 }
