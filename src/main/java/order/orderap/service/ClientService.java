@@ -1,5 +1,6 @@
 package order.orderap.service;
 
+import order.orderap.exception.ClientDataNotFoundException;
 import order.orderap.exception.ClientIdNotFoundException;
 import order.orderap.model.Client;
 import order.orderap.repository.ClientRepository;
@@ -49,6 +50,11 @@ public class ClientService {
         Specification<Client> byName = hasClientName(clientName);
         Specification<Client> byEmail = hasEmail(clientEmail);
         Specification<Client> byDiscount = hasDiscount(discount);
+
+        List<Client> all = clientRepo.findAll(where(byName).or(byEmail.or(byDiscount)));
+
+        if (all.isEmpty())
+            throw new ClientDataNotFoundException();
 
         return clientRepo.findAll(where(byName).or(byEmail.or(byDiscount)));
     }

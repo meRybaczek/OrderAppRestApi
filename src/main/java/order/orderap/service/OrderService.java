@@ -47,7 +47,7 @@ public class OrderService {
 
         if (clientName != null) {
             return clientRepo.findByClientName(clientName)
-                    .orElseThrow(() -> new ClientDataNotFoundException(clientName))
+                    .orElseThrow(ClientDataNotFoundException::new)
                     .getOrderPdfList();
 
         } else if (createdAt != null)
