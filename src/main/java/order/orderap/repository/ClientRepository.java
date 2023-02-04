@@ -1,6 +1,7 @@
 package order.orderap.repository;
 
 import order.orderap.model.Client;
+// CR: nieuzywane zaleznosc
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;

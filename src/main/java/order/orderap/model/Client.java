@@ -1,4 +1,5 @@
 package order.orderap.model;
+// CR: czemu pakieta nie ma orderapp?
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+// CR: record
 public class Client {
 
     @Id

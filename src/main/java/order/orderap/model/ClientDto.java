@@ -9,7 +9,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class ClientDto {
+public class ClientDto { 
+    // CR: record
+    // CR: Client.ListDTO i Client.FullDTO
+    // CR: dto do osobnego pakietu .dto
     private Integer id;
 
     private String clientName;

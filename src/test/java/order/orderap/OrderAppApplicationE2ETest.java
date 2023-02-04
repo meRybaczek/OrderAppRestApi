@@ -23,7 +23,10 @@ public class OrderAppApplicationE2ETest {
     RestTemplate restTemplate;
 
     @Test
-    public void shouldReturn200ok() throws Exception {
+    public void shouldReturn200ok() throws Exception { 
+        // CR: tu zamiast wywolywac jakis endpoint mozna wstrzyknac zaleznosc do serwisu i assertNotNull sprawdzić czy nie jest null
+        // nie trzeba wywolywac endpointu
+        // jesli zaleznosc bedzie rozna od null, to znaczy ze applikacja dobrze sie uruchomila 
         ResponseEntity<OrderPdf[]> response = restTemplate.getForEntity("http://localhost:" + port + "/order", OrderPdf[].class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
 

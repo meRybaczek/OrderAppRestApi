@@ -1,5 +1,6 @@
 package order.orderap.repository;
 
+// CR: nieuzywane zaleznosci
 import order.orderap.model.OrderFile;
 import order.orderap.model.OrderPdf;
 import org.springframework.data.jpa.repository.JpaRepository;

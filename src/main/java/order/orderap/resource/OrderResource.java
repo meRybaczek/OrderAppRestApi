@@ -11,11 +11,15 @@ import java.util.List;
 
 
 @RestController
+// CR: DTO
 public class OrderResource {
 
     @Autowired
+    // CR: private
+    // CR: wstrzykiwanie przez konstruktor i bez autowired
     OrderService orderService;
 
+    // CR: root path bez client, tu ty jako admin/manager apki pobierasz wszystkie, dodajesz, modyfikujesz oderdery
     @PostMapping("client/{clientId}/order")
     @ResponseStatus(HttpStatus.CREATED)
     public OrderPdf add(@RequestBody OrderPdf order, @PathVariable Integer clientId) {
@@ -23,12 +27,17 @@ public class OrderResource {
     }
 
     @DeleteMapping("/order")
+    // CR: root path w klasie
+    // CR: OK niepotrzebne
     @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestParam Integer id) {
         orderService.deleteById(id);
     }
 
+    
     @GetMapping("/order")
+    // CR: root path w klasie
+    // CR: OK niepotrzebne
     @ResponseStatus(HttpStatus.OK)
     public List<OrderPdf> getAllOrders(@RequestParam(required = false) String clientName,
                                        @RequestParam(required = false) LocalDate createdAt) {
@@ -37,12 +46,17 @@ public class OrderResource {
     }
 
     @GetMapping("order/{id}")
+    // CR: root path w klasie
+    // CR: OK niepotrzebne
     @ResponseStatus(HttpStatus.OK)
     public OrderPdf findById(@PathVariable Integer id) {
         return orderService.findById(id);
     }
 
     @GetMapping("client/{clientId}/order")
+    // CR: root path w klasie
+    // CR: OK niepotrzebne
+    // CR: bez client, niezalezny endpoint
     @ResponseStatus(HttpStatus.OK)
     public List<OrderPdf> getAllByClientId(@PathVariable Integer clientId) {
         return orderService.getByClientId(clientId);
