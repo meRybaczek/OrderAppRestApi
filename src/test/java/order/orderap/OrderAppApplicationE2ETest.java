@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class OrderAppApplicationE2ETest {
     @Value(value = "${local.server.port}")
     private int port;
+
     @Autowired
     RestTemplate restTemplate;
 
@@ -26,7 +27,7 @@ public class OrderAppApplicationE2ETest {
     public void shouldReturn200ok() throws Exception { 
         // CR: tu zamiast wywolywac jakis endpoint mozna wstrzyknac zaleznosc do serwisu i assertNotNull sprawdzić czy nie jest null
         // nie trzeba wywolywac endpointu
-        // jesli zaleznosc bedzie rozna od null, to znaczy ze applikacja dobrze sie uruchomila 
+        // jesli zaleznosc bedzie rozna od null, to znaczy ze applikacja dobrze sie uruchomila
         ResponseEntity<OrderPdf[]> response = restTemplate.getForEntity("http://localhost:" + port + "/order", OrderPdf[].class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
 

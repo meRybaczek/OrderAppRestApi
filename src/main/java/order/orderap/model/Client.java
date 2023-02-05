@@ -34,7 +34,7 @@ public class Client {
     private double discount;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")     // i tak pobiera calosc mimo LAZY ??
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<OrderPdf> orderPdfList = new ArrayList<>();
 
     public Client(String clientName, String nipNo, String clientEmail, double discount) {

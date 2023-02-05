@@ -66,7 +66,7 @@ public class ClientControllerIT {
                         .content(objectMapper.writeValueAsString(client))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.clientName").value("Archi1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nipNo").value("777-77-777-77"))

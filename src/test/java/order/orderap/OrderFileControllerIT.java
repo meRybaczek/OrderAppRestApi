@@ -33,7 +33,7 @@ public class OrderFileControllerIT {
         int id = 1;
         //then
         mockMvc.perform(get("/orderFile/{id}", id))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andDo(print());
     }
@@ -44,7 +44,7 @@ public class OrderFileControllerIT {
         int orderId = 1;
         //then
         mockMvc.perform(get("/order/{orderId}/orderFile", orderId))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].fileName").value("Rys1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].fileDir").value("C:\\test"))
@@ -72,7 +72,7 @@ public class OrderFileControllerIT {
                 .andDo(print());
 
         mockMvc.perform(get("/order/{orderId}/orderFile", orderId))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2))
                 .andDo(print());
     }
@@ -87,7 +87,7 @@ public class OrderFileControllerIT {
                         .content(objectMapper.writeValueAsString(orderFile))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.fileName").value("Rys2"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andDo(print());

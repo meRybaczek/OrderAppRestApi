@@ -17,10 +17,10 @@ public class OrderResource {
     @Autowired
     // CR: private
     // CR: wstrzykiwanie przez konstruktor i bez autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     // CR: root path bez client, tu ty jako admin/manager apki pobierasz wszystkie, dodajesz, modyfikujesz oderdery
-    @PostMapping("client/{clientId}/order")
+    @PostMapping("client/{clientId}/order") //CZYLI DAĆ CLIENT_iD JAKO @REQUEST_PARAM? CZY NP W BODY PRZEKAZAĆ CLIENT ID?
     @ResponseStatus(HttpStatus.CREATED)
     public OrderPdf add(@RequestBody OrderPdf order, @PathVariable Integer clientId) {
         return orderService.addOrder(order, clientId);
@@ -28,8 +28,6 @@ public class OrderResource {
 
     @DeleteMapping("/order")
     // CR: root path w klasie
-    // CR: OK niepotrzebne
-    @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestParam Integer id) {
         orderService.deleteById(id);
     }
@@ -37,8 +35,6 @@ public class OrderResource {
     
     @GetMapping("/order")
     // CR: root path w klasie
-    // CR: OK niepotrzebne
-    @ResponseStatus(HttpStatus.OK)
     public List<OrderPdf> getAllOrders(@RequestParam(required = false) String clientName,
                                        @RequestParam(required = false) LocalDate createdAt) {
         return orderService.getAllOrdersBy(clientName, createdAt);
@@ -47,17 +43,13 @@ public class OrderResource {
 
     @GetMapping("order/{id}")
     // CR: root path w klasie
-    // CR: OK niepotrzebne
-    @ResponseStatus(HttpStatus.OK)
     public OrderPdf findById(@PathVariable Integer id) {
         return orderService.findById(id);
     }
 
     @GetMapping("client/{clientId}/order")
     // CR: root path w klasie
-    // CR: OK niepotrzebne
     // CR: bez client, niezalezny endpoint
-    @ResponseStatus(HttpStatus.OK)
     public List<OrderPdf> getAllByClientId(@PathVariable Integer clientId) {
         return orderService.getByClientId(clientId);
     }

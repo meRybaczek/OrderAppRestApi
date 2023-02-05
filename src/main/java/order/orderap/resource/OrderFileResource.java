@@ -12,9 +12,13 @@ import java.util.List;
 // CR: DTO
 public class OrderFileResource {
 
-    @Autowired
+    //@Autowired                            DLACZEGO NIE AUTOWIRED ???
     // CR: wstrzykiwanie przez konstruktor i bez autowired    
     private OrderFileService orderFileService;
+
+    public OrderFileResource(OrderFileService orderFileService) {
+        this.orderFileService = orderFileService;
+    }
 
     // CR: /order/{order_id}/orderFile nad klasa
     @PostMapping("/order/{order_id}/orderFile")
@@ -25,8 +29,6 @@ public class OrderFileResource {
 
     @PutMapping("/orderFile")
     // CR: jw
-    // CR: CREATED w upadate?
-    @ResponseStatus(HttpStatus.CREATED)
     public OrderFile update(@RequestBody OrderFile orderFile) {
         return orderFileService.update(orderFile);
     }
@@ -34,22 +36,19 @@ public class OrderFileResource {
     @GetMapping("/order/{order_id}/orderFile")
     // CR: jw
     // CR: metody GET na poczatku
-    @ResponseStatus(HttpStatus.FOUND)
     public List<OrderFile> getByOrderId(@PathVariable Integer order_id) {
         return orderFileService.getByOrderId(order_id);
     }
 
     @GetMapping("/orderFile/{id}")
     // CR: dlaczego tu jest inny root path niz w metodach wyzej?
-    @ResponseStatus(HttpStatus.FOUND)
     public OrderFile get(@PathVariable Integer id) {
         return orderFileService.findById(id);
     }
 
     @DeleteMapping("/orderFile")
     // CR: jw, root path inny
-    // CR: po co deletById, samo delete, wyzej masz samo get, nie robi sie przy standardowych metodach GET/POST/PUT/DELETE metoda z ById
-    public void deleteById(@RequestParam Integer id) {
+    public void delete(@RequestParam Integer id) {
         orderFileService.deleteById(id);
     }
 
