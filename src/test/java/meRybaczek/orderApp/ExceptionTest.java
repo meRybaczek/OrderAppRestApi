@@ -17,6 +17,7 @@ public class ExceptionTest {
     @Autowired
     private MockMvc mockMvc;
 
+    // CR: te motody powinny byc w klasach testow dla client, order, orderfile
     @Test
     public void shouldReturnClientIdNotFoundException() throws Exception {
         //given

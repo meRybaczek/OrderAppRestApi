@@ -36,9 +36,11 @@ public class ClientService {
 
         List<Client> all = clientRepo.findAll(where(byName).or(byEmail.or(byDiscount)));
 
+        // CR: dlaczego error jak lista jest pusta? GET gdy na dla podanych warunkow nie ma danych powinien zwracac pusta liste..
         if (all.isEmpty())
             throw new ClientDataNotFoundException();
 
+        // CR: dlaczego tu jest odpalany drugi razy findAll, chyba przeoczenie
         return clientRepo.findAll(where(byName).or(byEmail.or(byDiscount)));
     }
 
@@ -54,8 +56,8 @@ public class ClientService {
     @Transactional
     public void delete(Integer id) {
         clientRepo.findById(id)
-                .orElseThrow(() -> new ClientIdNotFoundException(id))
-                .getOrderPdfList()
+                .orElseThrow(() -> new ClientIdNotFoundException(id)) // CR: rozdzielic lambde na client i potem na liste orderpdf na ktorej potem odlaczy sie referencje, nieczytelne
+                .getOrderPdfList() 
                 .forEach(order -> order.setClient(null));
         clientRepo.deleteById(id);
     }

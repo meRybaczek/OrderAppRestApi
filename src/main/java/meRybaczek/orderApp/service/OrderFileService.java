@@ -14,8 +14,10 @@ import java.util.List;
 @Service
 public class OrderFileService {
 
+    // CR: private
     OrderFileRepository orderFileRepo;
 
+    // CR: private
     OrderRepository orderRepo;
 
     public OrderFileService(OrderFileRepository orderFileRepo, OrderRepository orderRepo) {
@@ -29,6 +31,7 @@ public class OrderFileService {
     }
 
     public List<OrderFile> getByOrderId(Integer orderId) {
+        // tu bym jednak uzyl orderFileRepo skoro OrderFileService
         return orderRepo.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(orderId))
                 .getOrderFiles();
@@ -46,6 +49,7 @@ public class OrderFileService {
     public OrderFile update(OrderFile orderFile) {
         Integer orderFileId = orderFile.getId();
 
+        // CR: ta metoda do dyskusji na spotkaniu
         Integer order_id = orderFileRepo.findById(orderFileId)
                 .orElseThrow(() -> new OrderFileNotFoundException(orderFileId))
                 .getOrderPdf().getId();
@@ -54,6 +58,7 @@ public class OrderFileService {
                 .orElseThrow(() -> new OrderNotFoundException(order_id));
 
         orderFile.setOrderPdf(orderPdf);
+        // CR: powinno samo to wystarczyc
         return orderFileRepo.save(orderFile);
     }
 

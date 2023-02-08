@@ -25,5 +25,6 @@ public class ClientFullDto {
 
     private double discount;
 
+    // CR: tu powinno byc OrderPdfFullDto
     private List<OrderPdf> orderPdfList;
 }

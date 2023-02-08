@@ -12,6 +12,7 @@ public class OrderAppConfiguration {
         return new ModelMapper();
     }
 
+    // CR: po co to tu jest? w aplikacji raczej nie jest to potrzebne
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();

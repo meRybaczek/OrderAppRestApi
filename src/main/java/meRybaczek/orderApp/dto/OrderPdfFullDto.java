@@ -22,5 +22,6 @@ public class OrderPdfFullDto {
 
     private Client client;
 
+    // CR: orderfiledto
     private List<OrderFile> orderFiles;
 }

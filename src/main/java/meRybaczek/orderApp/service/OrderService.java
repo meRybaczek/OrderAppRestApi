@@ -33,6 +33,8 @@ public class OrderService {
 
     public List<OrderPdf> getAll(Integer clientId, String clientName, LocalDate createdAt) {
 
+        // CR: w tej metodzie nie stosujesz juz specification?
+        // CR: czemu tu if w nawiasach a dalej nie?
         if (clientName != null) {
             return clientRepository.findByClientName(clientName)
                     .orElseThrow(ClientDataNotFoundException::new)
