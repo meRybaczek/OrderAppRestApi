@@ -11,14 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 @Service
 public class OrderFileService {
 
-    // CR: private
-    OrderFileRepository orderFileRepo;
+    private OrderFileRepository orderFileRepo;
 
-    // CR: private
-    OrderRepository orderRepo;
+    private OrderRepository orderRepo;
 
     public OrderFileService(OrderFileRepository orderFileRepo, OrderRepository orderRepo) {
         this.orderFileRepo = orderFileRepo;
@@ -35,6 +34,15 @@ public class OrderFileService {
         return orderRepo.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(orderId))
                 .getOrderFiles();
+
+// W: to chyba jednak mało wydajne, czyż nie ?
+//        orderFileRepo.findAll()
+//                .stream()
+//                .filter(x -> x.getOrderPdf().getId() == orderId)
+//                .toList();
+
+
+
     }
 
     @Transactional
@@ -56,8 +64,8 @@ public class OrderFileService {
 
         OrderPdf orderPdf = orderRepo.findById(order_id)
                 .orElseThrow(() -> new OrderNotFoundException(order_id));
-
-        orderFile.setOrderPdf(orderPdf);
+                                                                            // zatem wystarczy samo save ??
+        //orderFile.setOrderPdf(orderPdf);
         // CR: powinno samo to wystarczyc
         return orderFileRepo.save(orderFile);
     }

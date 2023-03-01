@@ -14,4 +14,5 @@ public class ClientDataNotFoundAdvice {
     String clientDataNotFoundHandler(ClientDataNotFoundException ex) {
         return ex.getMessage();
     }
+
 }

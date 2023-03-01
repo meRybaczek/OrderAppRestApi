@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -33,13 +34,12 @@ public class OrderService {
 
     public List<OrderPdf> getAll(Integer clientId, String clientName, LocalDate createdAt) {
 
-        // CR: w tej metodzie nie stosujesz juz specification?
-        // CR: czemu tu if w nawiasach a dalej nie?
-        if (clientName != null) {
-            return clientRepository.findByClientName(clientName)
+        // CR: w tej metodzie nie stosujesz juz specification?      W: specfikacje były testowo wykonane dla clienta
+        if (clientName != null)
+            return clientRepository.findByClientName(clientName)    //tu uzycie clientRepo jest ok, pomimo ze to orderService?
                     .orElseThrow(ClientDataNotFoundException::new)
                     .getOrderPdfList();
-        }
+
         else if (createdAt != null)
             return orderRepository.findByCreatedAt(createdAt);
 

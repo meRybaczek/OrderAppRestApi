@@ -35,13 +35,13 @@ public class ClientService {
         Specification<Client> byDiscount = hasDiscount(discount);
 
         List<Client> all = clientRepo.findAll(where(byName).or(byEmail.or(byDiscount)));
-
+        // W: po co w takim razie mi wyjątek ClientDataNotFoundException ? Może zostawić tylko ClientIdExc ?
         // CR: dlaczego error jak lista jest pusta? GET gdy na dla podanych warunkow nie ma danych powinien zwracac pusta liste..
         if (all.isEmpty())
             throw new ClientDataNotFoundException();
+            //return Collections.emptyList(); lub w ogole to usunąć
 
-        // CR: dlaczego tu jest odpalany drugi razy findAll, chyba przeoczenie
-        return clientRepo.findAll(where(byName).or(byEmail.or(byDiscount)));
+        return all;
     }
 
     public Client add(Client client) {
@@ -55,11 +55,13 @@ public class ClientService {
 
     @Transactional
     public void delete(Integer id) {
-        clientRepo.findById(id)
-                .orElseThrow(() -> new ClientIdNotFoundException(id)) // CR: rozdzielic lambde na client i potem na liste orderpdf na ktorej potem odlaczy sie referencje, nieczytelne
+        Client client = clientRepo.findById(id)
+                .orElseThrow(() -> new ClientIdNotFoundException(id));
+
+            client
                 .getOrderPdfList() 
                 .forEach(order -> order.setClient(null));
         clientRepo.deleteById(id);
     }
-    
+
 }

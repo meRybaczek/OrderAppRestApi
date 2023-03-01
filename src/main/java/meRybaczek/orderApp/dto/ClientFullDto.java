@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import meRybaczek.orderApp.model.OrderPdf;
 
 import java.util.List;
 
@@ -25,6 +24,5 @@ public class ClientFullDto {
 
     private double discount;
 
-    // CR: tu powinno byc OrderPdfFullDto
-    private List<OrderPdf> orderPdfList;
+    private List<OrderPdfFullDto> orderPdfList;
 }

@@ -18,6 +18,5 @@ public class OrderPdfFormDto {
 
     private LocalDate createdAt;
 
-    // CR: clientdto
-    private Client client;
+    private ClientFormDto client;
 }

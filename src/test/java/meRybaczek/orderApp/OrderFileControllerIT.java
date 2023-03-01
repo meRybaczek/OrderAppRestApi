@@ -98,4 +98,15 @@ public class OrderFileControllerIT {
                 .andDo(print());
     }
 
+    @Test
+    public void shouldReturnOrderFileIdNotFound() throws Exception {
+        //given
+        int id = 100;
+        //then
+        mockMvc.perform(get("/orderFile/{id}", id))
+                .andExpect(status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value("Could not find orderFile id: " + id))
+                .andDo(print());
+    }
+
 }

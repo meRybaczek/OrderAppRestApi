@@ -1,6 +1,5 @@
 package meRybaczek.orderApp.dto;
 
-import meRybaczek.orderApp.model.OrderPdf;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +17,5 @@ public class OrderFileFormDto {
 
     private String fileDir;
 
-    // CR: odrderpdfdto
-    private OrderPdf orderPdf;
+    private OrderPdfFormDto orderPdf;
 }

@@ -1,5 +1,6 @@
 package meRybaczek.orderApp.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import meRybaczek.orderApp.model.OrderPdf;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,6 @@ public class OrderFileFullDto {
 
     private boolean isFold;
 
-    // CR: orderdto
-    private OrderPdf orderPdf;
+    @JsonIgnore
+    private OrderPdfFullDto orderPdf;
 }

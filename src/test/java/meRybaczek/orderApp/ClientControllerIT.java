@@ -142,4 +142,25 @@ public class ClientControllerIT {
                 .andDo(print());
     }
 
+    @Test
+    public void shouldReturnClientIdNotFoundException() throws Exception {
+        //given
+        int id = 100;
+        //then
+        mockMvc.perform(get("/client/{id}", id))
+                .andExpect(status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value("Could not find Client id :" + id))
+                .andDo(print());
+    }
+
+    @Test
+    public void shouldReturnClientDataNotFoundException() throws Exception {
+        String clientName = "Archi1NotFound";
+
+        mockMvc.perform(get("/client?clientName={clientName}", clientName))
+                .andExpect(status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value("Could not find Client by data"))
+                .andDo(print());
+    }
+
 }

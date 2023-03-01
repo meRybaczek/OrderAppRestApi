@@ -98,4 +98,15 @@ public class OrderPdfIT {
                 .andDo(print());
     }
 
+    @Test
+    public void shouldReturnOrderPdfIdNotFound() throws Exception {
+        //given
+        int id = 100;
+        //then
+        mockMvc.perform(get("/order/{id}", id))
+                .andExpect(status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value("Could not find order id :" + id))
+                .andDo(print());
+    }
+
 }
