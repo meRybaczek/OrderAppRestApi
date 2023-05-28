@@ -13,14 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderService {
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
 
     public OrderService(OrderRepository orderRepo, ClientRepository clientRepo) {
         this.orderRepository = orderRepo;
@@ -33,10 +32,8 @@ public class OrderService {
     }
 
     public List<OrderPdf> getAll(Integer clientId, String clientName, LocalDate createdAt) {
-
-        // CR: w tej metodzie nie stosujesz juz specification?      W: specfikacje były testowo wykonane dla clienta
         if (clientName != null)
-            return clientRepository.findByClientName(clientName)    //tu uzycie clientRepo jest ok, pomimo ze to orderService?
+            return clientRepository.findByClientName(clientName)
                     .orElseThrow(ClientDataNotFoundException::new)
                     .getOrderPdfList();
 

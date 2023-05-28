@@ -16,21 +16,22 @@ public class ClientResource {
     private final ClientService clientService;
     private final ModelMapper modelMapper;
 
-
     public ClientResource(ClientService clientService, ModelMapper modelMapper) {
         this.clientService = clientService;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public ClientFullDto get(@PathVariable Integer id) {
         return convertToFullDto(clientService.findById(id));
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<ClientFormDto> getAll(@RequestParam(required = false) String clientName,
-                                   @RequestParam(required = false) String clientEmail,
-                                   @RequestParam(required = false) Double discount) {
+                                      @RequestParam(required = false) String clientEmail,
+                                      @RequestParam(required = false) Double discount) {
 
         return clientService.findByCriteria(clientName, clientEmail, discount)
                 .stream().map(this::convertToFormDto)
@@ -42,11 +43,15 @@ public class ClientResource {
     public ClientFormDto add(@RequestBody Client client) {
         return convertToFormDto(clientService.add(client));
     }
+
     @PutMapping
+    @ResponseStatus(HttpStatus.OK)
     public ClientFormDto update(@RequestBody Client client) {
         return convertToFormDto(clientService.update(client));
     }
+
     @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestParam Integer id) {
         clientService.delete(id);
     }
@@ -54,6 +59,7 @@ public class ClientResource {
     private ClientFormDto convertToFormDto(Client client) {
         return modelMapper.map(client, ClientFormDto.class);
     }
+
     private ClientFullDto convertToFullDto(Client client) {
         return modelMapper.map(client, ClientFullDto.class);
     }

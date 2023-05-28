@@ -1,7 +1,6 @@
 package meRybaczek.orderApp.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import meRybaczek.orderApp.model.OrderPdf;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

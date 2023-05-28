@@ -15,9 +15,9 @@ import java.util.List;
 @Service
 public class OrderFileService {
 
-    private OrderFileRepository orderFileRepo;
+    private final OrderFileRepository orderFileRepo;
 
-    private OrderRepository orderRepo;
+    private final OrderRepository orderRepo;
 
     public OrderFileService(OrderFileRepository orderFileRepo, OrderRepository orderRepo) {
         this.orderFileRepo = orderFileRepo;
@@ -30,19 +30,9 @@ public class OrderFileService {
     }
 
     public List<OrderFile> getByOrderId(Integer orderId) {
-        // tu bym jednak uzyl orderFileRepo skoro OrderFileService
         return orderRepo.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(orderId))
                 .getOrderFiles();
-
-// W: to chyba jednak mało wydajne, czyż nie ?
-//        orderFileRepo.findAll()
-//                .stream()
-//                .filter(x -> x.getOrderPdf().getId() == orderId)
-//                .toList();
-
-
-
     }
 
     @Transactional
@@ -53,20 +43,9 @@ public class OrderFileService {
         orderFile.setOrderPdf(orderPdf);
         return orderFileRepo.save(orderFile);
     }
+
     @Transactional
     public OrderFile update(OrderFile orderFile) {
-        Integer orderFileId = orderFile.getId();
-
-        // CR: ta metoda do dyskusji na spotkaniu
-        Integer order_id = orderFileRepo.findById(orderFileId)
-                .orElseThrow(() -> new OrderFileNotFoundException(orderFileId))
-                .getOrderPdf().getId();
-
-        OrderPdf orderPdf = orderRepo.findById(order_id)
-                .orElseThrow(() -> new OrderNotFoundException(order_id));
-                                                                            // zatem wystarczy samo save ??
-        //orderFile.setOrderPdf(orderPdf);
-        // CR: powinno samo to wystarczyc
         return orderFileRepo.save(orderFile);
     }
 

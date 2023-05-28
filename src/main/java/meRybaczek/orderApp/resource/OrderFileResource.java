@@ -24,6 +24,7 @@ public class OrderFileResource {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public OrderFileFullDto get(@PathVariable Integer id) {
         return convertToFullDto(orderFileService.findById(id));
     }
@@ -43,11 +44,13 @@ public class OrderFileResource {
     }
 
     @PutMapping
+    @ResponseStatus(HttpStatus.OK)
     public OrderFileFormDto update(@RequestBody OrderFile orderFile) {
         return convertToFormDto(orderFileService.update(orderFile));
     }
 
     @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestParam Integer id) {
         orderFileService.deleteById(id);
     }

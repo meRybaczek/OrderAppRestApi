@@ -25,11 +25,13 @@ public class OrderResource {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public OrderPdfFullDto get(@PathVariable Integer id) {
         return convertToFullDto(orderService.findById(id));
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<OrderPdfFormDto> getAll(@RequestParam(required = false) Integer clientId,
                                        @RequestParam(required = false) String clientName,
                                        @RequestParam(required = false) LocalDate createdAt) {
@@ -46,6 +48,7 @@ public class OrderResource {
     }
 
     @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestParam Integer id) {
         orderService.delete(id);
     }

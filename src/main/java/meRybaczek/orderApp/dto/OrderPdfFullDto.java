@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import meRybaczek.orderApp.model.Client;
-import meRybaczek.orderApp.model.OrderFile;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -38,7 +38,7 @@ public class OrderPdf {
     private Client client;
 
     @OneToMany
-            (cascade = {CascadeType.PERSIST, CascadeType.REMOVE,}
+            (cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
                     , fetch = FetchType.LAZY, mappedBy = "orderPdf")
     List<OrderFile> orderFiles = new ArrayList<>();
 
