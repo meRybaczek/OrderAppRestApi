@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@Sql(scripts = {"/data.sql"})
+@Sql(scripts = {"/data-test.sql"})
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class OrderFileControllerIT {
@@ -75,7 +75,7 @@ public class OrderFileControllerIT {
     @Test
     public void shouldReturnOrderFileWhenUpdate() throws Exception {
         //given
-        OrderFile orderFile = new OrderFile(1,"Rys2", "C://o2", 594, 1200,
+        OrderFile orderFile = new OrderFile(1, "Rys2", "C://o2", 594, 1200,
                 true, 2, true);
         //then
         mockMvc.perform(put("/orderFile")
