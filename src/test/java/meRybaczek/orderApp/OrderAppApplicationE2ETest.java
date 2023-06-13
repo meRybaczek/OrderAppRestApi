@@ -17,22 +17,21 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(scripts = {"/data.sql"})
+@Sql(scripts = {"/data-test.sql"})
 public class OrderAppApplicationE2ETest {
 
     @Value(value = "${local.server.port}")
     private int port;
-
     @Autowired
     RestTemplate restTemplate;
-
     @Autowired
     OrderService orderService;
 
     @Test
     public void shouldReturn200okWhenEndToEndTest() throws Exception {
-
+        //when
         ResponseEntity<OrderPdf[]> response = restTemplate.getForEntity("http://localhost:" + port + "/order", OrderPdf[].class);
+        //then
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 

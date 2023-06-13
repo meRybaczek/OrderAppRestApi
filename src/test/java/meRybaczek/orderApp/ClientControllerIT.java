@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -17,7 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@Sql(scripts = {"/data.sql"})
+@ActiveProfiles("prod")
+@Sql(scripts = {"/data-test.sql"})
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ClientControllerIT {
@@ -59,7 +61,6 @@ public class ClientControllerIT {
     void shouldReturnUpdatedClientWhenUpdateAPI() throws Exception {
         //given
         Client client = new Client(1, "Archi1", "777-77-777-77", "new@archi.pl", 10.0);
-
         //then
         mockMvc.perform(put("/client")
                         .content(objectMapper.writeValueAsString(client))
@@ -96,8 +97,9 @@ public class ClientControllerIT {
 
     @Test
     public void shouldReturnClientWhenFindByCriteriaName() throws Exception {
+        //given
         String clientName = "Archi1";
-
+        //then
         mockMvc.perform(get("/client?clientName={clientName}", clientName))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
@@ -109,8 +111,9 @@ public class ClientControllerIT {
 
     @Test
     public void shouldReturnClientWhenFindByCriteriaEmail() throws Exception {
+        //given
         String clientEmail = "archi@archi.com";
-
+        //then
         mockMvc.perform(get("/client?clientEmail={clientEmail}", clientEmail))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
@@ -122,8 +125,9 @@ public class ClientControllerIT {
 
     @Test
     public void shouldReturnClientWhenFindByCriteriaDiscount() throws Exception {
+        //given
         Double discount = 5.0;
-
+        //then
         mockMvc.perform(get("/client?discount={discount}", discount))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
@@ -154,8 +158,9 @@ public class ClientControllerIT {
 
     @Test
     public void shouldReturnClientDataNotFoundException() throws Exception {
+        //given
         String clientName = "Archi1NotFound";
-
+        //then
         mockMvc.perform(get("/client?clientName={clientName}", clientName))
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").value("Could not find Client by data"))
