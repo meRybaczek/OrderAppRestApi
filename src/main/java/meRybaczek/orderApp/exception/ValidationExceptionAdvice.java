@@ -16,7 +16,7 @@ public class ValidationExceptionAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     String clientDataNotFoundHandler(MethodArgumentNotValidException ex) {
-        return ex.getBindingResult().getFieldErrors()
+       return ex.getBindingResult().getFieldErrors()
                 .stream()
                 .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)).toString();
     }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.pl.NIP;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,13 +32,15 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     @SequenceGenerator(name = "seq", sequenceName = "client_seq")
     private Integer id;
-
+    @NotNull
     private String clientName;
-
+    @NIP
+    @NotNull
     private String nipNo;
     @Email
     private String clientEmail;
-
+    @Positive
+    @Max(100)
     private double discount;
 
     @JsonIgnore

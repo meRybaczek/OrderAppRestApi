@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
+import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class OrderPdf {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     @SequenceGenerator(name = "seq", sequenceName = "order_pdf_seq")
     private Integer id;
-
+    @FutureOrPresent
     private LocalDate createdAt;
 
     @JsonIgnore

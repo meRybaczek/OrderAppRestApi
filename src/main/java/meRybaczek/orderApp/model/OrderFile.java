@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 
 @AllArgsConstructor
@@ -24,13 +26,13 @@ public class OrderFile {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     @SequenceGenerator(name = "seq", sequenceName = "order_file_seq")
     private Integer id;
-
+    @NotNull
     private String fileName;
-
+    @NotNull
     private String fileDir;
-
+    @Positive
     private double drawingSizeWidth;
-
+    @Positive
     private double drawingSizeHight;
 
     private boolean isDrawingColor;
