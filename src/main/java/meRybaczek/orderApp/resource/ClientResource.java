@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -40,7 +41,7 @@ public class ClientResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ClientFormDto add(@RequestBody Client client) {
+    public ClientFormDto add(@Valid @RequestBody Client client) {
         return convertToFormDto(clientService.add(client));
     }
 

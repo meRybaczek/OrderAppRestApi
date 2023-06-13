@@ -13,6 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class Client {
     private String clientName;
 
     private String nipNo;
-
+    @Email
     private String clientEmail;
 
     private double discount;
