@@ -1,5 +1,5 @@
 # OrderAppRestApi
-The Restful API is designed to handle clients, their orders, and a list of PDF files. This API is a microservice component of an application that manages orders in a large-format digital printing company. The API will work in conjunction with another microservice called "podliczacz," which is responsible for calculating the surface areas of clients' PDFs and estimating the price for client orders. The OrderRestApi and podliczacz microservices communicate with each other to facilitate the order management process.
+The Restful API is designed to handle clients, their orders, and a list of PDF files. This API is a microservice component of an application that manages orders in a large-format digital printing company. The API will work in conjunction with another microservice called "podliczacz," which is responsible for calculating the surface areas of clients' PDFs and estimating the price for client orders. The OrderRestApi and podliczacz microservices will communicate with each other to facilitate the order management process.
 ...
 The OrderAppRestApi application can be containerized and deployed using Docker. To create the Docker image, you can use a Dockerfile that contains the necessary instructions for building the image. Once the image is created, you can deploy the application using docker-compose.
 
