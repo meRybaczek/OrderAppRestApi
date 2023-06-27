@@ -23,8 +23,9 @@ import javax.validation.constraints.Positive;
 @Entity
 public class OrderFile {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
-    @SequenceGenerator(name = "seq", sequenceName = "order_file_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+//    @SequenceGenerator(name = "seq", sequenceName = "order_file_seq")
     private Integer id;
     @NotNull
     private String fileName;
