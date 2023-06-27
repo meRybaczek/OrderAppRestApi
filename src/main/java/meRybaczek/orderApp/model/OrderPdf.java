@@ -28,8 +28,9 @@ import java.util.List;
 public class OrderPdf {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
-    @SequenceGenerator(name = "seq", sequenceName = "order_pdf_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+//    @SequenceGenerator(name = "seq", sequenceName = "order_pdf_seq")
     private Integer id;
     @FutureOrPresent
     private LocalDate createdAt;
