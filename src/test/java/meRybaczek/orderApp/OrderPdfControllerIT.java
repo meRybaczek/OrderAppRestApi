@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 // CR: nazwa klasy
-public class OrderPdfIT {
+public class OrderPdfControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
