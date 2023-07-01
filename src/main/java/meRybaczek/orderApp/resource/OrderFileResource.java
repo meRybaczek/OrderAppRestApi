@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,19 +40,19 @@ public class OrderFileResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderFileFormDto add(@RequestBody OrderFile orderFile, @RequestParam Integer orderId) {
+    public OrderFileFormDto add(@Valid  @RequestBody OrderFile orderFile, @RequestParam Integer orderId) {
         return convertToFormDto(orderFileService.add(orderFile, orderId));
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public OrderFileFormDto update(@RequestBody OrderFile orderFile) {
+    public OrderFileFormDto update(@Valid @RequestBody OrderFile orderFile) {
         return convertToFormDto(orderFileService.update(orderFile));
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestParam Integer id) {
+    public void delete(@Valid @RequestParam Integer id) {
         orderFileService.deleteById(id);
     }
 

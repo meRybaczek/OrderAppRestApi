@@ -47,13 +47,13 @@ public class ClientResource {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public ClientFormDto update(@RequestBody Client client) {
+    public ClientFormDto update(@Valid @RequestBody Client client) {
         return convertToFormDto(clientService.update(client));
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestParam Integer id) {
+    public void delete(@Valid @RequestParam Integer id) {
         clientService.delete(id);
     }
 

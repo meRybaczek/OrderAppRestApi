@@ -18,8 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@ActiveProfiles("prod")
-@Sql(scripts = {"/data-test.sql"})
+//@ActiveProfiles("prod")
+//@Sql(scripts = {"/data-test.sql"})
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ClientControllerIT {
@@ -43,16 +43,16 @@ public class ClientControllerIT {
     @Test
     public void shouldReturnClientWhenAdd() throws Exception {
         //given
-        Client client1 = new Client("Archi2", "666-66-666-66", "new@archi.pl", 10.0);
+        Client client1 = new Client("Archi2", "7792328428", "new@archi.pl", 10.0);
         //then
         mockMvc.perform(post("/client")
                         .content(objectMapper.writeValueAsString(client1))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.clientName").value("Archi2"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nipNo").value("666-66-666-66"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nipNo").value("7792328428"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.discount").value(10.0))
                 .andDo(print());
     }

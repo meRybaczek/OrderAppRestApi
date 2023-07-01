@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -43,13 +44,13 @@ public class OrderResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderPdfFormDto add(@RequestBody OrderPdf order, @RequestParam Integer clientId) {
+    public OrderPdfFormDto add(@Valid @RequestBody OrderPdf order, @RequestParam Integer clientId) {
         return convertToFormDto(orderService.add(order, clientId));
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestParam Integer id) {
+    public void delete(@Valid @RequestParam Integer id) {
         orderService.delete(id);
     }
     private OrderPdfFormDto convertToFormDto(OrderPdf orderPdf) {
