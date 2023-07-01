@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -20,11 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@ActiveProfiles("prod")
-@Sql(scripts = {"/data-test.sql"})
+@Transactional
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-// CR: nazwa klasy
 public class OrderPdfControllerIT {
 
     @Autowired
@@ -38,14 +36,14 @@ public class OrderPdfControllerIT {
         mockMvc.perform(get("/order"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].createdAt").value("2012-12-12"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].createdAt").value(LocalDate.now().toString()))
                 .andDo(print());
     }
 
     @Test
     public void shouldReturnOrderPfdWhenPostApi() throws Exception {
 
-        OrderPdf orderPdf = new OrderPdf(LocalDate.now());
+        OrderPdf orderPdf = new OrderPdf(1,LocalDate.now());
         int clientId = 1;
 
         mockMvc.perform(post("/order?clientId={clientId}", clientId)
@@ -53,7 +51,7 @@ public class OrderPdfControllerIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andDo(print());
     }
 

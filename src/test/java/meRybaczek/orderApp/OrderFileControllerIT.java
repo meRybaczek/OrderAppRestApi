@@ -11,15 +11,15 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@Sql(scripts = {"/data-test.sql"})
+@Transactional
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class OrderFileControllerIT {
 
     @Autowired
@@ -54,7 +54,7 @@ public class OrderFileControllerIT {
     @Test
     public void shouldReturnOrderFileWhenAddOrderFileToOrderPdfByOrderPdfId() throws Exception {
         //given
-        OrderFile orderFile = new OrderFile("Rys2", "C://o2", 594, 1200,
+        OrderFile orderFile = new OrderFile(1,"Rys2", "C://o2", 594, 1200,
                 true, 2, true);
         int orderId = 1;
         //then
@@ -68,7 +68,7 @@ public class OrderFileControllerIT {
 
         mockMvc.perform(get("/orderFile?orderId={orderId}", orderId))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))
                 .andDo(print());
     }
 
