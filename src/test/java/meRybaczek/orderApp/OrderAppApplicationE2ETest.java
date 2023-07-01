@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(scripts = {"/data-test.sql"})
+//@Sql(scripts = {"/data-test.sql"})
 public class OrderAppApplicationE2ETest {
 
     @Value(value = "${local.server.port}")

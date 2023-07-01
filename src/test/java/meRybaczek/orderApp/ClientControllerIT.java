@@ -43,7 +43,7 @@ public class ClientControllerIT {
     @Test
     public void shouldReturnClientWhenAdd() throws Exception {
         //given
-        Client client1 = new Client("Archi2", "7792328428", "new@archi.pl", 10.0);
+        Client client1 = new Client(1,"Archi2", "7792328428", "new@archi.pl", 10.0);
         //then
         mockMvc.perform(post("/client")
                         .content(objectMapper.writeValueAsString(client1))

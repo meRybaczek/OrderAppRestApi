@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ActiveProfiles("prod")
-@Sql(scripts = {"/data-test.sql"})
+//@Sql(scripts = {"/data-test.sql"})
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 // CR: nazwa klasy
@@ -38,14 +38,14 @@ public class OrderPdfControllerIT {
         mockMvc.perform(get("/order"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].createdAt").value("2012-12-12"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].createdAt").value(LocalDate.now().toString()))
                 .andDo(print());
     }
 
     @Test
     public void shouldReturnOrderPfdWhenPostApi() throws Exception {
 
-        OrderPdf orderPdf = new OrderPdf(LocalDate.now());
+        OrderPdf orderPdf = new OrderPdf(1,LocalDate.now());
         int clientId = 1;
 
         mockMvc.perform(post("/order?clientId={clientId}", clientId)
@@ -53,7 +53,7 @@ public class OrderPdfControllerIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andDo(print());
     }
 

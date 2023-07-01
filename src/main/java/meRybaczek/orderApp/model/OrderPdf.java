@@ -48,4 +48,8 @@ public class OrderPdf {
         this.createdAt = createdAt;
     }
 
+    public OrderPdf(Integer id, LocalDate createdAt) {
+        this.id = id;
+        this.createdAt = createdAt;
+    }
 }
