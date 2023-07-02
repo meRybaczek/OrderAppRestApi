@@ -72,6 +72,18 @@ class OrderServiceTest {
         verify(clientRepository,times(1)).findByClientName(clientName);
         assertEquals(2,all.size());
     }
+    @Test
+    @DisplayName("Should retrieve list of orderPdfs by date")
+    void shouldRetrieveOrderPdfByDate() {
+        //given
+        List<OrderPdf> orderPdfs = List.of(new OrderPdf(1,LocalDate.now()), new OrderPdf(2, LocalDate.now()));
+        when(orderRepository.findByCreatedAt(any())).thenReturn(orderPdfs);
+        //when
+        List<OrderPdf> all = orderService.getAll(null,null,LocalDate.now());
+        //then
+        verify(orderRepository,times(1)).findByCreatedAt(any());
+        assertEquals(2,all.size());
+    }
 
     @Test
     @DisplayName("Should save orderPdf by client id")
@@ -86,6 +98,7 @@ class OrderServiceTest {
         //then
         verify(orderRepository,times(1)).save(orderPdf);
     }
+
 
     @Test
     @DisplayName("Should delete orderPdf by id")
