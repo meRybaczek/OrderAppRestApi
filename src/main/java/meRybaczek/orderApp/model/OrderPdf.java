@@ -52,4 +52,10 @@ public class OrderPdf {
         this.id = id;
         this.createdAt = createdAt;
     }
+
+    public OrderPdf(Integer id, LocalDate createdAt, List<OrderFile> orderFiles) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.orderFiles = orderFiles;
+    }
 }
