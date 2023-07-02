@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,12 +77,13 @@ class OrderServiceTest {
     @DisplayName("Should retrieve list of orderPdfs by date")
     void shouldRetrieveOrderPdfByDate() {
         //given
-        List<OrderPdf> orderPdfs = List.of(new OrderPdf(1,LocalDate.now()), new OrderPdf(2, LocalDate.now()));
-        when(orderRepository.findByCreatedAt(any())).thenReturn(orderPdfs);
+        LocalDate date = LocalDate.now();
+        List<OrderPdf> orderPdfs = List.of(new OrderPdf(1, date), new OrderPdf(2, date));
+        when(orderRepository.findByCreatedAt(date)).thenReturn(orderPdfs);
         //when
-        List<OrderPdf> all = orderService.getAll(null,null,LocalDate.now());
+        List<OrderPdf> all = orderService.getAll(null,null,date);
         //then
-        verify(orderRepository,times(1)).findByCreatedAt(any());
+        verify(orderRepository,times(1)).findByCreatedAt(date);
         assertEquals(2,all.size());
     }
 
