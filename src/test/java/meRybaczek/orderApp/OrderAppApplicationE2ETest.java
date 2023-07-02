@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+import java.net.URL;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -28,8 +31,10 @@ public class OrderAppApplicationE2ETest {
 
     @Test
     public void shouldReturn200okWhenEndToEndTest() throws Exception {
+        //given
+        URI apiUri = new URI("http://localhost:" + port + "/order");
         //when
-        ResponseEntity<OrderPdf[]> response = restTemplate.getForEntity("http://localhost:" + port + "/order", OrderPdf[].class);
+        ResponseEntity<OrderPdf[]> response = restTemplate.getForEntity(apiUri, OrderPdf[].class);
         //then
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
