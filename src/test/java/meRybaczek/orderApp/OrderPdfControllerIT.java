@@ -11,6 +11,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,12 @@ public class OrderPdfControllerIT {
 
     @Test
     public void shouldReturnOrderPdfListWhenGetApi() throws Exception {
-        mockMvc.perform(get("/order"))
+        //given
+        //V2__insert_test_data.sql
+        //when
+        ResultActions perform = mockMvc.perform(get("/order"));
+        //then
+        perform
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].createdAt").value(LocalDate.now().toString()))
@@ -42,14 +48,16 @@ public class OrderPdfControllerIT {
 
     @Test
     public void shouldReturnOrderPfdWhenPostApi() throws Exception {
-
+        //given
         OrderPdf orderPdf = new OrderPdf(1,LocalDate.now());
         int clientId = 1;
-
-        mockMvc.perform(post("/order?clientId={clientId}", clientId)
-                        .content(objectMapper.writeValueAsString(orderPdf))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+        //when
+        ResultActions perform = mockMvc.perform(post("/order?clientId={clientId}", clientId)
+                .content(objectMapper.writeValueAsString(orderPdf))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+        //then
+        perform
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andDo(print());
@@ -59,8 +67,10 @@ public class OrderPdfControllerIT {
     public void shouldReturnDeletedStatusWhenDeleteOrderPdfById() throws Exception {
         //given
         int id = 1;
+        //when
+        ResultActions perform = mockMvc.perform(delete("/order?id={id}", id));
         //then
-        mockMvc.perform(delete("/order?id={id}", id))
+        perform
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -69,8 +79,10 @@ public class OrderPdfControllerIT {
     public void shouldReturnOrderPdfWhenFindById() throws Exception {
         //given
         int id = 1;
+        //when
+        ResultActions perform = mockMvc.perform(get("/order/{id}", id));
         //then
-        mockMvc.perform(get("/order/{id}", id))
+        perform
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andDo(print());
@@ -80,8 +92,10 @@ public class OrderPdfControllerIT {
     public void shouldReturnOrderPdfListWhenFindByClientId() throws Exception {
         //given
         int clientId = 1;
+        //when
+        ResultActions perform = mockMvc.perform(get("/order?clientId={clientId}", clientId));
         //then
-        mockMvc.perform(get("/order?clientId={clientId}", clientId))
+        perform
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").exists())
                 .andDo(print());
@@ -91,8 +105,10 @@ public class OrderPdfControllerIT {
     public void shouldReturnOrderPdfListWhenFindOrderPdfByClientName() throws Exception {
         //given
         String clientName = "Archi1";
+        //when
+        ResultActions perform = mockMvc.perform(get("/order?clientName={clientName}", clientName));
         //then
-        mockMvc.perform(get("/order?clientName={clientName}", clientName))
+        perform
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").exists())
                 .andDo(print());
@@ -102,8 +118,10 @@ public class OrderPdfControllerIT {
     public void shouldReturnOrderPdfIdNotFound() throws Exception {
         //given
         int id = 100;
+        //when
+        ResultActions perform = mockMvc.perform(get("/order/{id}", id));
         //then
-        mockMvc.perform(get("/order/{id}", id))
+        perform
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").value("Could not find order id :" + id))
                 .andDo(print());
