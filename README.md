@@ -32,7 +32,7 @@ from the main application directory. According to the configuration in the pom.x
 This command will generate a Docker image named orderap-img and save it in the local Docker registry. The docker-compose.yml file in the main directory allows you to run the application container along with additional containers for the MySQL database and Adminer to view the database. To start all the containers, use the following command: $docker-compose up.
 
 ## Usage:
-After logging into Adminer, you can view the current state of the database. Adminer is accessible at port 8080, and you can log in using the following credentials:
+After logging into Adminer, you can view the current state of the database. Adminer is accessible at port 9090, and you can log in using the following credentials:
 
 * System: MySQL
 * Server: mysql
