@@ -11,6 +11,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +31,12 @@ public class ClientControllerIT {
 
     @Test
     public void shouldReturnClientWhenGetAll() throws Exception {
-        mockMvc.perform(get("/client"))
+        //given
+        //V2__insert_test_data.sql
+        //when
+        ResultActions perform = mockMvc.perform(get("/client"));
+        //then
+        perform
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
                 .andExpect((MockMvcResultMatchers.jsonPath("$.[0].clientName").value("Archi1")))
@@ -43,11 +49,13 @@ public class ClientControllerIT {
     public void shouldReturnClientWhenAdd() throws Exception {
         //given
         Client client1 = new Client(1,"Archi2", "7792328428", "new@archi.pl", 10.0);
+        //when
+        ResultActions perform = mockMvc.perform(post("/client")
+                .content(objectMapper.writeValueAsString(client1))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
         //then
-        mockMvc.perform(post("/client")
-                        .content(objectMapper.writeValueAsString(client1))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+        perform
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.clientName").value("Archi2"))
@@ -60,11 +68,13 @@ public class ClientControllerIT {
     void shouldReturnUpdatedClientWhenUpdateAPI() throws Exception {
         //given
         Client client = new Client(1, "Archi1", "777-77-777-77", "new@archi.pl", 10.0);
+        //when
+        ResultActions perform = mockMvc.perform(put("/client")
+                .content(objectMapper.writeValueAsString(client))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
         //then
-        mockMvc.perform(put("/client")
-                        .content(objectMapper.writeValueAsString(client))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+        perform
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.clientName").value("Archi1"))
@@ -77,8 +87,10 @@ public class ClientControllerIT {
     public void shouldReturnDeletedStatusWhenDeleteClientByIdAPI() throws Exception {
         //given
         int id = 1;
+        //when
+        ResultActions perform = mockMvc.perform(delete("/client?id={id}", id));
         //then
-        mockMvc.perform(delete("/client?id={id}", id))
+        perform
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -87,8 +99,10 @@ public class ClientControllerIT {
     public void shouldReturnClientWhenFindByIdAPI() throws Exception {
         //given
         int id = 1;
+        //when
+        ResultActions perform = mockMvc.perform(get("/client/{id}", id));
         //then
-        mockMvc.perform(get("/client/{id}", id))
+        perform
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andDo(print());
@@ -98,8 +112,10 @@ public class ClientControllerIT {
     public void shouldReturnClientWhenFindByCriteriaName() throws Exception {
         //given
         String clientName = "Archi1";
+        //when
+        ResultActions perform = mockMvc.perform(get("/client?clientName={clientName}", clientName));
         //then
-        mockMvc.perform(get("/client?clientName={clientName}", clientName))
+        perform
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
                 .andExpect((MockMvcResultMatchers.jsonPath("$.[0].clientName").value("Archi1")))
@@ -112,8 +128,10 @@ public class ClientControllerIT {
     public void shouldReturnClientWhenFindByCriteriaEmail() throws Exception {
         //given
         String clientEmail = "archi@archi.com";
+        //when
+        ResultActions perform = mockMvc.perform(get("/client?clientEmail={clientEmail}", clientEmail));
         //then
-        mockMvc.perform(get("/client?clientEmail={clientEmail}", clientEmail))
+        perform
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
                 .andExpect((MockMvcResultMatchers.jsonPath("$.[0].clientName").value("Archi1")))
@@ -126,8 +144,10 @@ public class ClientControllerIT {
     public void shouldReturnClientWhenFindByCriteriaDiscount() throws Exception {
         //given
         Double discount = 5.0;
+        //when
+        ResultActions perform = mockMvc.perform(get("/client?discount={discount}", discount));
         //then
-        mockMvc.perform(get("/client?discount={discount}", discount))
+        perform
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id").value(1))
                 .andExpect((MockMvcResultMatchers.jsonPath("$.[0].clientName").value("Archi1")))
@@ -138,7 +158,12 @@ public class ClientControllerIT {
 
     @Test
     public void shouldReturnClientDtoWhenGetClient() throws Exception {
-        mockMvc.perform(get("/client"))
+        //given
+        //V2__insert_test_data.sql
+        //when
+        ResultActions perform = mockMvc.perform(get("/client"));
+        //then
+        perform
                 .andExpect(status().isOk())
                 .andExpect((MockMvcResultMatchers.jsonPath("$.[0].clientEmail").doesNotExist()))
                 .andDo(print());
@@ -148,8 +173,10 @@ public class ClientControllerIT {
     public void shouldReturnClientIdNotFoundException() throws Exception {
         //given
         int id = 100;
+        //when
+        ResultActions perform = mockMvc.perform(get("/client/{id}", id));
         //then
-        mockMvc.perform(get("/client/{id}", id))
+        perform
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").value("Could not find Client id :" + id))
                 .andDo(print());
@@ -159,8 +186,10 @@ public class ClientControllerIT {
     public void shouldReturnClientDataNotFoundException() throws Exception {
         //given
         String clientName = "Archi1NotFound";
+        //when
+        ResultActions perform = mockMvc.perform(get("/client?clientName={clientName}", clientName));
         //then
-        mockMvc.perform(get("/client?clientName={clientName}", clientName))
+        perform
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").value("Could not find Client by data"))
                 .andDo(print());

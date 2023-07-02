@@ -16,9 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class OrderFileServiceTest {
-    OrderFileRepository orderFileRepository;
-    OrderRepository orderRepository;
-    OrderFileService orderFileService;
+    private OrderFileRepository orderFileRepository;
+    private OrderRepository orderRepository;
+    private OrderFileService orderFileService;
 
     @BeforeEach
     void setUp() {
