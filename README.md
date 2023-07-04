@@ -12,11 +12,11 @@ OrderAppRestApi is a CRUD application designed to manage customer orders for a l
 * Maven
 * MySQL (production database)
 * H2 (in-memory database for testing)
-* Flyway (database migration tool)
-* Lombok (for reducing boilerplate code)
-* Bean Validation (for data validation)
-* JUnit (testing framework)
-* AssertJ (fluent assertions library)
+* Flyway
+* Lombok
+* Bean Validation
+* JUnit5
+* AssertJ
 * Mockito
 * MockMVC
 * Docker
@@ -48,22 +48,7 @@ After logging into Adminer, you can view the current state of the database. Admi
     │   │   │   └── meRybaczek
     │   │   │       └── orderApp
     │   │   │           ├── dto
-    │   │   │           │   ├── ClientFormDto.java
-    │   │   │           │   ├── ClientFullDto.java
-    │   │   │           │   ├── OrderFileFormDto.java
-    │   │   │           │   ├── OrderFileFullDto.java
-    │   │   │           │   ├── OrderPdfFormDto.java
-    │   │   │           │   └── OrderPdfFullDto.java
     │   │   │           ├── exception
-    │   │   │           │   ├── ClientDataNotFoundAdvice.java
-    │   │   │           │   ├── ClientDataNotFoundException.java
-    │   │   │           │   ├── ClientIdNotFoundAdvice.java
-    │   │   │           │   ├── ClientIdNotFoundException.java
-    │   │   │           │   ├── OrderFileNotFoundAdvice.java
-    │   │   │           │   ├── OrderFileNotFoundException.java
-    │   │   │           │   ├── OrderNotFoundAdvice.java
-    │   │   │           │   ├── OrderNotFoundException.java
-    │   │   │           │   └── ValidationExceptionAdvice.java
     │   │   │           ├── model
     │   │   │           │   ├── Client.java
     │   │   │           │   ├── OrderFile.java
@@ -83,7 +68,6 @@ After logging into Adminer, you can view the current state of the database. Admi
     │   │   │           │   ├── OrderFileService.java
     │   │   │           │   └── OrderService.java
     │   │   │           └── specification
-    │   │   │               └── SpecificationCriteria.java
     │   │   └── resources
     │   │       ├── application.properties
     │   │       └── db
