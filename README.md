@@ -436,4 +436,16 @@ DELETE http://localhost:8090/orderFile?id=4
 
 The above DELETE request will delete the file (OrderFile) with id=4.
 
+### Form fields validtion:
 
+Body fileds must meet below conditions: 
+
+    'clientName' - not null filed;
+    'nipNo'- not null filed, 10-digit number;
+    'clientEmail' - email structure form;
+    'discount' - number between 0 and 100;
+    'createdAt' - present or future date;
+    'fileName' - not null field;
+    'fileDir' - not null field;
+    'drawingSizeWidth' - positive number;
+    'drawingSizeHight' - positive number;
