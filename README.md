@@ -130,7 +130,7 @@ Response:
 
   * Parameters:
 
-    {id} - client given id
+    {id} - id number assigned to the client
 
 Example: GET http://localhost:8090/client/1
 
@@ -436,4 +436,16 @@ DELETE http://localhost:8090/orderFile?id=4
 
 The above DELETE request will delete the file (OrderFile) with id=4.
 
+### Form fields validation:
 
+Body fileds must meet below conditions: 
+
+    'clientName' - not null field;
+    'nipNo'- not null field, 10-digit number;
+    'clientEmail' - email structure form;
+    'discount' - number between 0 and 100;
+    'createdAt' - present or future date;
+    'fileName' - not null field;
+    'fileDir' - not null field;
+    'drawingSizeWidth' - positive number;
+    'drawingSizeHight' - positive number;
