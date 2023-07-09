@@ -440,8 +440,8 @@ The above DELETE request will delete the file (OrderFile) with id=4.
 
 Body fileds must meet below conditions: 
 
-    'clientName' - not null filed;
-    'nipNo'- not null filed, 10-digit number;
+    'clientName' - not null field;
+    'nipNo'- not null field, 10-digit number;
     'clientEmail' - email structure form;
     'discount' - number between 0 and 100;
     'createdAt' - present or future date;
